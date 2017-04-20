@@ -12,6 +12,8 @@ services:
             - CYGNUS_MYSQL_PASS=mypassword
         depends_on:
             - mysql
+        ports:
+            - "5050:5050"
 
     mysql:
         image: mysql:8
