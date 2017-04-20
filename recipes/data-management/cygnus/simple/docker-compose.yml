@@ -3,9 +3,10 @@ version: '3'
 services:
 
     cygnus-common:
+        # image: fixed-cygnus
         image: martel/cygnus-ngsi
         environment:
-            - CYGNUS_CONF_URL=https://gist.githubusercontent.com/taliaga/26ebe4b540befa32f24a8f847de4c72b/raw/95f054aeb2a424ccc0afc1f04a70a6bdb59ff6ef/cygnus_agent.conf
+            - CYGNUS_CONF_URL=https://gist.githubusercontent.com/taliaga/26ebe4b540befa32f24a8f847de4c72b/raw/f30cfd08bc8fab179192a7605009504898ad9e3b/cygnus_agent.conf
             - CYGNUS_LOG_LEVEL=DEBUG
             - CYGNUS_MYSQL_HOST=mysql
             - CYGNUS_MYSQL_USER=root
@@ -16,11 +17,8 @@ services:
             - "5050:5050"
 
     mysql:
-        image: mysql:8
+        image: mysql
         ports:
             - "3306:3306"
-
         environment:
             - MYSQL_ROOT_PASSWORD=mypassword
-            - MYSQL_USER=myuser
-            - MYSQL_PASSWORD=mypassword
