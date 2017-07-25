@@ -99,8 +99,16 @@ def configure_replica(mongo_service, overlay_network_name, replicaset_name, mong
         logger.error(msg, exc_info=True)
         return
 
+    # Filter tasks (we don't want old failed tasks)
+    try:
+        mongo_tasks = [mt for mt in mongo_tasks if mt['Status']['State'] == 'running']
+    except KeyError as e:
+        logger.error("Could not filter mongo tasks by status == running, so we'll try to use all. {}".format(e))
+    logger.info("After filtering by 'running' state, we have {} tasks".format(len(mongo_tasks)))
+
     # Prepare mongo config
     mongo_tasks_ips = get_tasks_ips(mongo_tasks, overlay_network_name)
+    logger.info("Mongo tasks ips: {}".format(mongo_tasks_ips))
     config = create_mongo_config(mongo_tasks_ips, replicaset_name, mongo_port)
     logger.info("Initial config: {}".format(config))
 
