@@ -121,8 +121,7 @@ def configure_replica(mongo_service, overlay_network_name, replicaset_name, mong
     # Respond to changes
     current_ips = set(mongo_tasks_ips)
     while True:
-        # TODO: Reacting to events is better than sleeping and polling
-        time.sleep(42)
+        time.sleep(10)
 
         new_ips = set(get_tasks_ips(mongo_service.tasks(), overlay_network_name))
         if not new_ips.difference(current_ips):
